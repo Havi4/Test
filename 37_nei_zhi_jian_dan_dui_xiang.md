@@ -1005,8 +1005,15 @@ let bigname = d.speak()?.uppercaseString
 这段代码之后，不要忘记，bigname是一个包装了String的可选类型。
 >注意
 >在第五章我会讨论一些Swift语法来判断一个Optional是不是nil
->tip
->
+
+
+####可选类型的比较
+在和非Optional对象进行比较的时候，Optional有个特殊的对象：比较的是去包装后的对象，而不是可选类型本身，所以比如：
+```swift
+
+```
+
+
 
 
 
