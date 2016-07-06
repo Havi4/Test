@@ -1037,7 +1037,12 @@ let v = UIView()
 let c = v.backgroundColor
 let c2 = c.colorWithAlphaComponent(0.5)//编译错误
 ```
-但是
+但是，大多数情况下，Cocoa的类型对象不会被标记为Optional。这是因为，尽管理论上是可以为空的（因为Oc可以为nil）。在实际中不会这么做。因此Swift给你留了一步来把值作为它本身来看待。这个魔法通过Cocoa API来完成。在Swift的第一个公开版本中，所有从Cocoa来的对象都是被标记为Optional（通常是隐式的被包装为）。但是后来apple使用了hand-tweaking来表示那些不需要标记位可选的。
+
+在极少数情况下，你还会在Cocoa API中遇到隐式的去包装的情况。比如，API NSBundle的一个方法loadNibNamed:owner:options:
+```swift
+
+```
 
 
 
