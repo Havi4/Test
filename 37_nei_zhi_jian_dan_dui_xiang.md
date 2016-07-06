@@ -1041,8 +1041,17 @@ let c2 = c.colorWithAlphaComponent(0.5)//编译错误
 
 在极少数情况下，你还会在Cocoa API中遇到隐式的去包装的情况。比如，API NSBundle的一个方法loadNibNamed:owner:options:
 ```swift
-
+func loadNibName(name:String!,owner:AnyObject!,options:[NSObject:AnyObject]!)-> [AnyObject]!
 ```
+这些隐式去包装的类型说明这些方法还没有被hand-tweaked.他们不能准确的代表这种情况--你永远不会给第一个参数传递nil，比如--。
+
+另外一个可选的重要用处就是初始化一个对象属性。如果一个变量被声明为Optional，它本身就有一个值即使你不给它赋值--默认是nil。这会用在有些对象必须具有初始值，但又不是立刻。一个典型的例子是，outlet,它代表了引用IB上的一个对象：
+```swift
+class ViewController: UIViewController {
+  @IBOutlet var myButton: UIButton!
+}
+```
+从现在开始，@IBOutlet在内部连接Xcode，重要的是，
 
 
 
