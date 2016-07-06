@@ -1051,7 +1051,9 @@ class ViewController: UIViewController {
   @IBOutlet var myButton: UIButton!
 }
 ```
-从现在开始，@IBOutlet在内部连接Xcode，重要的是，
+从现在开始，@IBOutlet在内部连接Xcode，重要的是，这个属性mybutton在我们的ViewController属性第一次存在的时候是不存在的，但是随后会controller的view会被加载然后mybutton会被设置，然后被设置到IB上。因此，这个变量被标记为隐式的去包装类型。这个值是可选类型的原因是我们需要一个占位符赋值给mybutton，在ViewController第一次被实例化的时候。它的隐式的去包装使得在我们的代码中我们可以把self.mybutton直接的作为UIButton使用，直接作为Optional传递而不需要考虑它是一个可选对象。
+
+一个相近的情况是，当一个变量，不是一个实例的属性，表示的数据需要一定的时间来获取。比如，在我的照片应用中，当我们启动的时候，我创建了根viewcontroller的一个实例。我还需要收集用户音乐库中的数据，然后把这些数据保存到控制器的实例中。因此我需要首先
 
 
 
