@@ -41,5 +41,5 @@
    * [3.6 懒初始化](36_lan_chu_shi_hua.md)
    * [3.7 内置简单对象](37_nei_zhi_jian_dan_dui_xiang.md)
 * [第四章 对象类型](di_si_zhang_dui_xiang_lei_xing.md)
-   * 4.1 对象类型的声明和特征
+   * [4.1 对象类型的声明和特征](41_dui_xiang_lei_xing_de_sheng_ming_he_te_zheng.md)
 
