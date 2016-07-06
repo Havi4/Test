@@ -1053,7 +1053,39 @@ class ViewController: UIViewController {
 ```
 从现在开始，@IBOutlet在内部连接Xcode，重要的是，这个属性mybutton在我们的ViewController属性第一次存在的时候是不存在的，但是随后会controller的view会被加载然后mybutton会被设置，然后被设置到IB上。因此，这个变量被标记为隐式的去包装类型。这个值是可选类型的原因是我们需要一个占位符赋值给mybutton，在ViewController第一次被实例化的时候。它的隐式的去包装使得在我们的代码中我们可以把self.mybutton直接的作为UIButton使用，直接作为Optional传递而不需要考虑它是一个可选对象。
 
-一个相近的情况是，当一个变量，不是一个实例的属性，表示的数据需要一定的时间来获取。比如，在我的照片应用中，当我们启动的时候，我创建了根viewcontroller的一个实例。我还需要收集用户音乐库中的数据，然后把这些数据保存到控制器的实例中。因此我需要首先
+一个相近的情况是，当一个变量，不是一个实例的属性，表示的数据需要一定的时间来获取。比如，在我的照片应用中，当我们启动的时候，我创建了根viewcontroller的一个实例。我还需要收集用户音乐库中的数据，然后把这些数据保存到控制器的实例中。因此我需要首先实例话一个视图控制器，然后收集用户数据，因为如果我们在初始化控制器前收集数据，那么app需要很久的时间启动--一个非常糟糕的体验，甚至会发生闪退，因为ios不允许长时间启动。因此有关数据的属性声明位可选类型；它们一开始是nil知道数据收集完毕，这时候赋值给他们正确的数据：
+```swift
+class RootViewController: UITableViewController {
+  var albums:[MPMediaItemConlletion]!//初始化位nil
+}
+```
+
+最后，使用Optional最重要的愿意是防止一个值被标记为空或者错误的类型。前面的例子就是最好的说明。当我的app启动的时候，它使用一个table展示了用户的所有的音乐列表。在启动的时候，数据还没有被收集，我的列表展示测试了下这个albus是不是为空，如果是，展示空的table。在收集完数据之后，我会让table重新展示一次。这次，table展示的数据不是nil，是实际的数据-需要展示的数据。使用Optional可以使用一个变量来保存有数据的情况和没有数据的情况。
+
+许多Swift自带的函数使用Optional都是这个类似的途径。我之前提到过：
+```swift
+let s = "31"
+let i = Int(s)//是一个可选Optional（31）
+```
+从一个String转换为Int返回一个可选类型，因为转换可能失败。如果s是"Howdy",不是一个number，因此这个类型返回的是int，因为这里没有int需要来代表，"没有发现Int".返回一个可选解决了这个问题：nil代表转换失败，因此Int最后是被包装的一个可选。
+
+Swift在这点上比OC聪明，如果一个引用是一个对象，OC可以返回nil代表返回失败，但是在OC不是任何都是对象。因此，cocoa中许多重要的方法返回一个特殊值来表示失败，你必须记住这些值，然后检测他们。比如，NSString的方法rangeOfString:可能发现给定的目标字符串；这种情况下，会返回一个NSRange它的长度是0，还有特定的index。如果没有发现这返回一个NSNotFound。幸运的是，这个特殊的值被内置在Swift中直接桥接给nil，Swift类型返回一个包装了Range的可选，如果返回的Range的位置不存在就是NSNotFound，Swift会使用nil来代替它。
+
+并不是所有是Swift-Cocoa桥接都这么好用。如果你调用NSArray的方法：indexOfObject:，返回的结果是Int，不是一个包装了Int的可选类型，这个结果可以是NSNotFound，因此你必须记住检测结果
+```swift
+let arr = [1,2,3]
+let ix = (arr as NSArray).indexOfObject(4)
+if ix == NSNotFound {
+}
+```
+在这个例子中有个相似的情况，Swift中调用indexOf方法，这个会返回可选：
+```swift
+let arr = [1,2,3]
+let ix = arr.indexOf(4)
+if ix == nil{
+}
+```
+
 
 
 
